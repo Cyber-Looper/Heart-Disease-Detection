@@ -33,7 +33,7 @@ bg_img = add_bg_from_local('/mount/src/heart-disease-detection/heart.jpeg')
 
 
 # Fetch data
-data = pd.read_csv('Heart_dis_detect/dataset/heart_dis.csv')
+data = pd.read_csv('/mount/src/heart-disease-detection/heart_dis.csv')
 df = pd.DataFrame(data)
 
 
