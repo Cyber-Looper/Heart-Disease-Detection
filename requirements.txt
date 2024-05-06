@@ -14,7 +14,7 @@ click==8.1.7
 cloudpickle==2.2.1
 colorama==0.4.6
 contourpy==1.2.0
-cryptography==41.0.7
+cryptography==42.0.4
 cycler==0.12.1
 dataclasses-json==0.6.3
 distro==1.9.0
