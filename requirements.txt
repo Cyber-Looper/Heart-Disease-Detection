@@ -38,7 +38,7 @@ kiwisolver==1.4.5
 langchain==0.1.4
 langchain-community==0.0.16
 langchain-core==0.1.17
-langchain-experimental==0.0.49
+langchain-experimental==0.0.52
 langchain-openai==0.0.5
 langsmith==0.0.85
 markdown-it-py==3.0.0
