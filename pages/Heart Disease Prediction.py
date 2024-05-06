@@ -65,11 +65,11 @@ Y_target = trainDf['Heart Disease']
 x_train, x_test, y_train, y_test = train_test_split(X_features, Y_target, test_size=0.2, random_state=0)
 
 # Testing Data
-testData = pd.read_csv('Heart_dis_detect\dataset\dataTest.csv')
-testDf = pd.DataFrame(testData)
+# testData = pd.read_csv('Heart_dis_detect\dataset\dataTest.csv')
+# testDf = pd.DataFrame(testData)
 
 # Splitting features
-X_test = testDf
+# X_test = testDf
 
 
 ## Model Selection
@@ -112,16 +112,16 @@ st.markdown(f"<h5 style='color: white;'><b>Accuracy of {mod_sel} Model :</b> <i>
 
 
 # Custom data
-cust_pred = pipe.predict(X_test)
-cust_pred_list = list(cust_pred)
+# cust_pred = pipe.predict(X_test)
+# cust_pred_list = list(cust_pred)
 
 
-for index in range(len(X_test)):
-    # insert predicted values to list
-    cust_pred_list.append(cust_pred)
+# for index in range(len(X_test)):
+#     # insert predicted values to list
+#     cust_pred_list.append(cust_pred)
     
-    # remove unneccessary value at last
-    cust_pred_list.pop()
+#     # remove unneccessary value at last
+#     cust_pred_list.pop()
 
 
 # # Update Prediction Result
