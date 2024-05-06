@@ -49,7 +49,7 @@ blank4, blank6 = st.columns(2)
 
 
 # Training Data
-trainData = pd.read_csv('Heart_dis_detect\dataset\heart_dis.csv')
+trainData = pd.read_csv('/mount/src/heart-disease-detection/heart_dis.csv')
 trainDf = pd.DataFrame(trainData)
 
 # st.write(trainDf)
