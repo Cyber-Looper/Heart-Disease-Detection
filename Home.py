@@ -15,7 +15,7 @@ st.markdown('<style>div.block-container{padding-top:3rem; color: white;font-weig
 rw1, rw2, rw3 = st.columns([30,55, 15])
 with rw2:
   # hd = st.title(":fuelpump: Drilling Analysis Dashboard")
-  st.markdown("<h1 style='color: white;font-weight:bold;'>Heart Disease Analysis Dashboard</h1>", unsafe_allow_html=True)
+  st.markdown("<h1 style='color: white;font-weight:bold;text-align:center;'>Heart Disease Analysis Dashboard</h1>", unsafe_allow_html=True)
 
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
