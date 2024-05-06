@@ -34,7 +34,7 @@ def add_bg_from_local(image_file):
     """,
     unsafe_allow_html=True
     )
-bg_img = add_bg_from_local('Heart_dis_detect\img\heart.jpeg')
+bg_img = add_bg_from_local('/mount/src/heart-disease-detection/heart.jpeg')
 
 
 head_1, head_2, head_3 = st.columns([20,60, 20])
