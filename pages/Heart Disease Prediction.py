@@ -141,6 +141,20 @@ with upd1:
         test_data_pred = pd.read_csv(uploaded_file)
         # st.write(test_data_pred)
 
+# Splitting features
+X_test = test_data_pred
+
+# Custom data
+cust_pred = pipe.predict(X_test)
+cust_pred_list = list(cust_pred)
+
+
+for index in range(len(X_test)):
+    # insert predicted values to list
+    cust_pred_list.append(cust_pred)
+    
+    # remove unneccessary value at last
+    cust_pred_list.pop()
 
 if st.button('Predict'):
     
