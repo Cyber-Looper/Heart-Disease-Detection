@@ -12,7 +12,7 @@ st.markdown('<style>div.block-container{padding-top:3rem; color: white;font-weig
 #     st.image('../img/cittabase_logo_bg.jpg', width=200)
 
 # Heading
-rw1, rw2, rw3 = st.columns([30,55, 15])
+rw1, rw2, rw3 = st.columns([25,60, 15])
 with rw2:
   # hd = st.title(":fuelpump: Drilling Analysis Dashboard")
   st.markdown("<h1 style='color: white;font-weight:bold;text-align:center;'>Heart Disease Analysis Dashboard</h1>", unsafe_allow_html=True)
