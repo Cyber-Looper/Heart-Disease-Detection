@@ -149,7 +149,7 @@ if uploaded_file is not None:
     cust_pred_list = list(cust_pred)
 
 
-    for index in range(len(X_test)):
+    for index in range(len(upd_data)):
         # insert predicted values to list
         cust_pred_list.append(cust_pred)
         
