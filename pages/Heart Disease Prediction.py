@@ -39,7 +39,7 @@ def add_bg_from_local(image_file):
     """,
     unsafe_allow_html=True
     )
-bg_img = add_bg_from_local('Heart_dis_detect\img\heart.jpeg')
+bg_img = add_bg_from_local('/mount/src/heart-disease-detection/heart.jpeg')
 
 
 head_1, head_2, head_3 = st.columns([20,60, 20])
@@ -54,7 +54,7 @@ blank4, blank6 = st.columns(2)
 
 
 # Training Data
-trainData = pd.read_csv('Heart_dis_detect\dataset\heart_dis.csv')
+trainData = pd.read_csv('/mount/src/heart-disease-detection/heart_dis.csv')
 trainDf = pd.DataFrame(trainData)
 
 # st.write(trainDf)
@@ -70,11 +70,11 @@ Y_target = trainDf['Heart Disease']
 x_train, x_test, y_train, y_test = train_test_split(X_features, Y_target, test_size=0.2, random_state=0)
 
 # Testing Data
-testData = pd.read_csv('Heart_dis_detect\dataset\dataTest.csv')
-testDf = pd.DataFrame(testData)
+# testData = pd.read_csv('Heart_dis_detect\dataset\dataTest.csv')
+# testDf = pd.DataFrame(testData)
 
 # Splitting features
-X_test = testDf
+# X_test = testDf
 
 
 ## Model Selection
