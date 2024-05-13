@@ -1,0 +1,5 @@
+Age,Gender,Chest Pain Type,Resting BPs,Cholesterol,Fasting Blood Sugar,Resting ECG,Max Heart Rate,Exercise Angina,Oldpeak,ST Slope,RBP_Normal,RBP_Elevated,RBP_Stage-1_Hypertension,RBP_Stage-2_Hypertension,RBP_Hypertensive_Crisis
+90,1,2,110,280,1,1,200,0,1.5,1,1,0,0,0,0
+58,0,3,156,164,0,0,99,1,2,2,0,0,0,1,0
+33,1,2,127,300,1,1,148,0,1,1,0,1,0,1,0
+77,0,1,180,170,0,0,128,1,0.7,2,0,0,0,1,1
