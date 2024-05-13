@@ -39,7 +39,7 @@ def add_bg_from_local(image_file):
     """,
     unsafe_allow_html=True
     )
-bg_img = add_bg_from_local('/mount/src/heart-disease-detection/heart.jpeg')
+bg_img = add_bg_from_local('Heart_dis_detect\img\heart.jpeg')
 
 
 head_1, head_2, head_3 = st.columns([20,60, 20])
@@ -54,27 +54,71 @@ blank4, blank6 = st.columns(2)
 
 
 # Training Data
-trainData = pd.read_csv('/mount/src/heart-disease-detection/heart_dis.csv')
+trainData = pd.read_csv('Heart_dis_detect\dataset\heart_dis.csv')
 trainDf = pd.DataFrame(trainData)
 
 # st.write(trainDf)
 
+# copying train data for feature engineering
+fe_trainDf = trainDf.copy()
+
+### Data Transformation
+
+# Categorize Blood Pressure Type
+def bp_class(bp):
+    if (bp < 120 ) & (bp >= 0):
+        return 1
+    elif (bp >= 120) & (bp <= 129):
+        return 2
+    elif (bp >= 130) & (bp <= 139):
+        return 3
+    elif (bp >= 140 )& (bp <= 179):
+        return 4
+    elif (bp >= 180):
+        return 5
+    else:
+        return bp
+fe_trainDf['Resting BPs'] = fe_trainDf['Resting BPs'].apply(bp_class)
+
+
+# Feature Engineering
+# One-Hot-Encoding for Resting blood pressure
+encoder = OneHotEncoder(categories='auto')
+encoded_data = encoder.fit_transform(fe_trainDf[['Resting BPs']])
+
+# Define meaningful names for the one-hot encoded features
+rbp_categories = ['Normal', 'Elevated', 'Stage-1 Hypertension', 'Stage-2 Hypertension', 'Hypertensive Crisis']
+column_names = [f'RBP_{category.replace(" ", "_")}' for category in rbp_categories]
+
+
+# Create a new dataframe with one-hot encoded features
+encoded_df = pd.DataFrame(encoded_data.toarray(), columns=column_names)
+# encoded_df = pd.DataFrame(encoded_data.toarray(), columns=[f'RBP_{i+1}' for i in range(encoded_data.shape[1])])
+
+# Concatenate the encoded dataframe with the original dataframe
+fe_df = pd.concat([fe_trainDf, encoded_df], axis=1)
+
+# Fetch columns from dataframe as list
+columns = fe_df.columns.tolist()
+
+# Move the 3rd column to the last position
+columns.append(columns.pop(11))
+
+# Reorder the DataFrame columns
+fe_df = fe_df[columns]
+        
+# st.write(trainData)
+# st.write(fe_df)
+
 
 # Splitting features and targets
-X_features = trainDf.drop(columns=['Heart Disease'])
-Y_target = trainDf['Heart Disease']
+X_features = fe_df.drop(columns=['Heart Disease'])
+Y_target = fe_df['Heart Disease']
 # st.write(Y_train)
 
 
 # Splitting Trainging data
 x_train, x_test, y_train, y_test = train_test_split(X_features, Y_target, test_size=0.2, random_state=0)
-
-# Testing Data
-# testData = pd.read_csv('Heart_dis_detect\dataset\dataTest.csv')
-# testDf = pd.DataFrame(testData)
-
-# Splitting features
-# X_test = testDf
 
 
 ## Model Selection
@@ -112,34 +156,10 @@ mod_acc = accuracy_score(y_test, pred)
 # Return model metrics
 st.markdown(f"<h5 style='color: white;'><b>Accuracy of {mod_sel} Model :</b> <i>{mod_acc:.2f}</i></h5>", unsafe_allow_html=True)
 
-# if st.button('Random Forest Classifier Model'):
-#     st.markdown(f"<h5 style='color: white;'><b>Accuracy of Random Forest Classifier Model :</b> <i>{mod_acc:.2f}</i></h5>", unsafe_allow_html=True)
-
-
-# Custom data
-# cust_pred = pipe.predict(X_test)
-# cust_pred_list = list(cust_pred)
-
-
-# for index in range(len(X_test)):
-#     # insert predicted values to list
-#     cust_pred_list.append(cust_pred)
-    
-#     # remove unneccessary value at last
-#     cust_pred_list.pop()
-
-
-# # Update Prediction Result
-# predDf = testDf.copy()
-
-# predDf['Heart_Dis_Pred'] = cust_pred_list
-
 
 # Heading
 st.markdown("<h2 style='color: white;'><b>Prediction of Heart Disease Detection</b></h2>", unsafe_allow_html=True)
 
-# upd1, upd2 = st.columns([0.3, 0.7])
-# with upd1:
 # upload test dataset
 uploaded_file = st.file_uploader("***Import file***", type=["csv"])
 if uploaded_file is not None:
@@ -162,31 +182,8 @@ if uploaded_file is not None:
 
     if st.button('Predict'):
         
-        ## Update Prediction Result
-        # predDf = test_data_pred.copy()
-        # upd_data['Heart Disease'] = cust_pred_list
-
-
-        ## Feature Engineering
-        # One-Hot-Encoding for Resting blood pressure
-        encoder = OneHotEncoder(categories='auto')
-        encoded_data = encoder.fit_transform(upd_data[['Resting BPs']])
-
-        # rbp_type = ['Normal', 'Elevated', 'Stage 1 hypertension', 'Stage1_Hypertension', 'Hypertensive_Crisis']
-        # Create new dataframe with one-hot encoded features
-        encoded_df = pd.DataFrame(encoded_data.toarray(), columns=[f'RBP_{i+1}' for i in range(encoded_data.shape[1])])
-
-        # Concatenate encoded dataframe with original dataframe
-        final_df = pd.concat([upd_data, encoded_df], axis=1)
-        
-        # Fetch columns from dataframe as list
-        columns = final_df.columns.tolist()
-
-        # Move the 3rd column to the last position
-        columns.append(columns.pop(11))
-
-        # Reorder the DataFrame columns
-        final_df = final_df[columns]
+        ## Copying uploaded data for prediction
+        final_df = upd_data.copy()
         
         
         ## DataType Validation
@@ -228,38 +225,22 @@ if uploaded_file is not None:
                 return sugar
         final_df['Fasting Blood Sugar'] = final_df['Fasting Blood Sugar'].apply(sugar_class)
 
-
-        # # Categorize Blood Pressure Type
-        # def bp_class(bp):
-        #     if bp < 120:
-        #         return 1
-        #     elif bp >= 120 & bp <=129:
-        #         return 2
-        #     elif bp >= 130 & bp <=139:
-        #         return 3
-        #     elif bp >= 140 & bp <=179:
-        #         return 4
-        #     elif bp >= 180:
-        #         return 5
-        #     else:
-        #         return bp
-        # final_df['Resting BPs'] = final_df['Resting BPs'].apply(bp_class)
         
         # Categorize Blood Pressure Type
-        def bp_class(bp):
-            if bp < 120:
+        def bp_class1(bp):
+            if (bp < 120 ) & (bp >= 0):
                 return 'Normal'
-            elif bp >= 120 & bp <=129:
+            elif (bp >= 120) & (bp <= 129):
                 return 'Elevated'
-            elif bp >= 130 & bp <=139:
+            elif (bp >= 130) & (bp <= 139):
                 return 'Stage-1 Hypertension'
-            elif bp >= 140 & bp <=179:
+            elif (bp >= 140 )& (bp <= 179):
                 return 'Stage-2 Hypertension'
-            elif bp >= 180:
+            elif (bp >= 180):
                 return 'Hypertensive Crisis'
             else:
                 return bp
-        final_df['Resting BPs'] = final_df['Resting BPs'].apply(bp_class)
+        final_df['Resting BPs'] = final_df['Resting BPs'].apply(bp_class1)
         
 
         # Categorize Chest Pain Type
@@ -308,7 +289,6 @@ if uploaded_file is not None:
 
         
         # Return Predicted Outcome
-        # st.dataframe(predDf)
         st.dataframe(final_df)
         
         @st.cache_data
