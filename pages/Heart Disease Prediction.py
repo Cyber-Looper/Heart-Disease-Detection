@@ -108,7 +108,7 @@ columns.append(columns.pop(11))
 fe_df = fe_df[columns]
         
 # st.write(trainData)
-st.write(fe_df)
+# st.write(fe_df)
 
 
 # Splitting features and targets
