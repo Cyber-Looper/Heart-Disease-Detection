@@ -361,4 +361,4 @@ if uploaded_file is not None:
             st.plotly_chart(fig, use_container_width=True)
             
 else:
-    st.markdown("<p style='color: #d1e7dd;'><i>kindly upload the custom dataset for prediction</i></p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #d1e7dd;'><i>kindly upload your custom dataset for prediction</i></p>", unsafe_allow_html=True)
